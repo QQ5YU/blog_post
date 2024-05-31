@@ -273,7 +273,7 @@ unset VARIABLENAME
   - **-type \<d/p/f/l/s>\*\*: 指定類型: 目錄、pipe、檔案、連結檔案、socket
     **常用方式\*\*
   - find \<path> -iname \<fileName>: 搜尋指定路徑下的特定名稱檔案
-  - find \<path> -iname '\*.<副檔名>': 搜尋指定路徑下的特定副檔名檔案
+  - find \<path> -iname '\*.\<副檔名\>': 搜尋指定路徑下的特定副檔名檔案
 - **sort**: 按字母排序
   **options**
   - **-b**: 忽略每行開頭的空格字元
@@ -283,7 +283,7 @@ unset VARIABLENAME
   - **-n**: 按照數字大小
   - **-u**: 去除重複值
   - **-r**: 反轉排序
-  - **-t <分隔字元>**: 指定分隔字元
+  - **-t \<分隔字元\>**: 指定分隔字元
 - **uniq**: 判斷上一行與下一行的值有無相同，相同則忽略只印出第一項(童常會搭配 sort 一起用，先排序後塞選值)
   **options**
   - **-c or -\-count**: 每列旁邊顯示該行重複出現的次數
@@ -328,7 +328,7 @@ unset VARIABLENAME
   - **-h or -\-human-readable**: 將磁盤大小以人類可讀的方式（例如 GB、MB）顯示。
   - **-T or -\-print-type**: 顯示檔案系統類型
   - **-i or -\-inodes**: 顯示檔案系統的 inode 使用情況，即檔案和目錄的數量
-  - **-x <副檔名>or-\-exclude-type=<副檔名>**: 排除指定副檔名的文件系統
+  - **-x \<副檔名\>or-\-exclude-type=<副檔名>**: 排除指定副檔名的文件系統
 - **du**: 顯示資料夾或是檔案大小
   **options**
   - **-a or -\-all**: 顯示資料夾中個別檔案大小
@@ -339,7 +339,7 @@ unset VARIABLENAME
   - **-m or -\-megabytes**: 以 1MB 為單位
   - **-s or -\-summarize**: 只顯示指定檔案或資料夾大小
   - **-X or -\-exclude-from=<排除的路徑或檔案名稱>**: 排除指定的資料夾或檔案
-  - **-\-exclude=<資料夾或檔案名稱>**: 排除指定檔案
+  - **-\-exclude=\<資料夾或檔案名稱\>**: 排除指定檔案
 - **fdisk**: 管理磁碟分割表的命令列工具
   **options**
   - **-l**: 列出系統上所有磁碟的分割表資訊，包括磁碟的名稱、大小、分割數量等。
@@ -421,7 +421,7 @@ unset VARIABLENAME
 
 ### 權限指令
 
-- **chmod <權限> <檔案名稱>**: change file mode bits，變更檔案權限
+- **chmod \<權限\> \<檔案名稱\>**: change file mode bits，變更檔案權限
 
   ==**options**==
 
@@ -454,7 +454,7 @@ unset VARIABLENAME
    chmod u+r new_file
   ```
 
-- **chgrp \<groupName> fileName**: change group，更改檔案或目錄的群組（group），groupName 為指定群組名稱，fileName 為想更改的檔案或目錄名稱。
+- **chgrp \<groupName\> fileName**: change group，更改檔案或目錄的群組（group），groupName 為指定群組名稱，fileName 為想更改的檔案或目錄名稱。
 - **chown userName:groupName fileName**: (Changing Ownership and Group)，將指定文件（或目錄）的所有者更改為 userName，群組更改為 groupName
 - **groups**: 查看目前使用者的 group
 - **newgrp groupName**: 切換群組
@@ -469,10 +469,10 @@ unset VARIABLENAME
 - **userdel**: 刪除使用者
   **options**
   - **-r**: 刪除使用者登入以及所有檔案等
-- **usermod \<groupName> \<userName>**: 用於修改使用者帳戶的指令
+- **usermod \<groupName\> \<userName\>**: 用於修改使用者帳戶的指令
   **optiions**
   - **-a**: append，在使用者現有的群組清單中加入一個新的群組
-  - \*\*-G \<groupName>\*\*: 將使用者添加到哪個群組
+  - \*\*-G \<groupName\>\*\*: 將使用者添加到哪個群組
 - **groupmod 按兩下 tab**: 檢視現有群組
 - **deluser userName groupName**: 從指定群組中刪除指定使用者
 - **finger**: 取得使用者的資訊 (要安裝)
@@ -528,9 +528,9 @@ brct1 指令需要安裝 (install bridge-utils)
 - **more**: 分頁顯示檔案內容，按上下鍵可以換頁，用於內容多的檔案中
 - **less**: 要先裝套件，很像 more 但主要是一行一行跑而不是以頁為單位
 - **head**: 顯示檔案開頭內容
-  - -n <行數>: 顯示幾行
+  - -n \<行數\>: 顯示幾行
 - **tail**: 顯示檔案結尾內容
-  - -n <行數>: 顯示幾行
+  - -n \<行數\>: 顯示幾行
 - **wc fileName**: 統計文件中行數、字數、幾 bytes 等等
   **options**
   - **-l or -\-lines**: 只顯示行數
