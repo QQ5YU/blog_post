@@ -99,7 +99,7 @@ tags: ["linux"]
 **常見目錄表示**
 
 - **/**: 表示根目錄
-- **~**: 表示 /home/<使用者名稱>/ ，也就是家目錄
+- **~**: 表示 /home/\<使用者名稱>\/ ，也就是家目錄
 
 ### 權限
 
@@ -242,8 +242,8 @@ unset VARIABLENAME
   - **-B 行數**: 顯示指定行數的後一行
   - **-c or -\-count**: 不會顯示行數，直接顯示匹配到的行數
   - **-C 行數**: 顯示指定行數的前一行及後一行
-  - **-d or -\-directories=<路徑>**: 指定要搜索的目錄
-  - **-e or -\-regexp=\<pattern>**: 指定一個或多個搜索模式（字符串）作為參數。這些模式將被視為單獨的參數，而不是一個整體的正則表達式。
+  - \*\*-d or -\-directories=\<路徑>\*\*: 指定要搜索的目錄
+  - \*\*-e or -\-regexp=\<pattern>\*\*: 指定一個或多個搜索模式（字符串）作為參數。這些模式將被視為單獨的參數，而不是一個整體的正則表達式。
   - **-E or -\-extended-regexp**: 指定一個擴展的正則表達式，可使用一些政則表達式的邏輯運算等等
   - **-f or -\-file=fileName**: 指定規則文件
   - **-n or -\-line-number**: 顯示第幾行
@@ -472,7 +472,7 @@ unset VARIABLENAME
 - **usermod \<groupName> \<userName>**: 用於修改使用者帳戶的指令
   **optiions**
   - **-a**: append，在使用者現有的群組清單中加入一個新的群組
-  - **-G \<groupName>**: 將使用者添加到哪個群組
+  - \*\*-G \<groupName>\*\*: 將使用者添加到哪個群組
 - **groupmod 按兩下 tab**: 檢視現有群組
 - **deluser userName groupName**: 從指定群組中刪除指定使用者
 - **finger**: 取得使用者的資訊 (要安裝)
