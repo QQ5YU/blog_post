@@ -75,11 +75,6 @@ docker build -t vieux/apache:2.0 .
 **options**
 * **-\-input**: 輸入檔案的意思
 
-:::info
-save 及 load 的另一種寫法，save 的寫法 **docker save imageId > fileName **，
-load 的寫法 **docker load < fileName**
-:::
-
 --- 
 
 ## container 的基本指令
@@ -89,10 +84,6 @@ load 的寫法 **docker load < fileName**
 
 ### docker run imageName:tag
 > 建立 container 並執行指令
-
-:::warning
-docker run 指令每次都會 new container，並不會重複利用 container
-:::
 
 **options**
 * **-c**: 使用主機 CPU 的多少資源(主機 = 1024 CPU share)
@@ -106,24 +97,21 @@ docker run 指令每次都會 new container，並不會重複利用 container
 * **-i or -\-interactive**: 讓 container 的標準輸入保持打開，相當於 Linux 上的 STDIN
 * **-t or -\-tty**: 告訴 Docker 要分配一個虛擬終端機（pseudo-tty）並綁定到 container 的標準輸入上，相當於 Linux 上的 STDOUT
 * **-it**: 啟動互動模式，進入 Linux 主機，可直接對 container 下指令
-* **-di**: 將 container 放入背景，並且讓他保持基本==輸入==的能力
-* **-dt**:將 container 放入背景，並且讓他保持基本==輸出==的能力
+* **-di**: 將 container 放入背景，並且讓他保持基本輸入的能力
+* **-dt**:將 container 放入背景，並且讓他保持基本輸出的能力
 * **-idt**:將 container 放入背景，並且讓他保持基本輸入或 輸出的能力
 * **privileged**: 擁有容器特權，有點類似 root 特權，可進行一些修改操作
 * **-\-network networkName**: 與 network 連接
 * **-e envName=value or -\-env envName=value**: 設置環境變數
 * **-v localFolderPath:containerFolderPath**: **Bind Mount**，將本機資料夾與容器資料夾綁定，兩邊連動同步。
-* **-\-mount ==type=bind==,source="本機資料夾目錄",target="容器內資料儲存的目錄"**: **Bind Mount**，等同於上方 -v 指令
+* **-\-mount type=bind,source="本機資料夾目錄",target="容器內資料儲存的目錄"**: **Bind Mount**，等同於上方 -v 指令
 * **-v volumeName:containerFolderPath**: 掛載 volume 空間到 container 上
-* **-\-mount ==type=volume==,source="本機資料夾目錄",target="容器內資料儲存的目錄"**: **掛載 volume 空間，同上 -v 指令**
+* **-\-mount type=volume,source="本機資料夾目錄",target="容器內資料儲存的目錄"**: **掛載 volume 空間，同上 -v 指令**
 * **-\-volumes-from containerID**:*掛載指定 container 上掛載的所有 volume 空間**
-* **-\-mount ==type=tmpfs==,destination=containerPat**: 掛載一個臨時文件系統(tmpfs)到容器中，當容器停止時，就會移除資料，常用來儲存暫存性或敏感資料。
+* **-\-mount type=tmpfs,destination=containerPat**: 掛載一個臨時文件系統(tmpfs)到容器中，當容器停止時，就會移除資料，常用來儲存暫存性或敏感資料。
 * **-m**: 限制容器使用多少儲存空間(超出限制一倍 docker daemon 會強制關閉容器)
 * **-\-memory-swap**: 指定 Container 儲存空間容量
 
-:::warning
-**--volume** 是**主機與容器之間**的資料共享，**--volume-from** 是**容器之間**的資料共享
-:::
 
 * **-\-link name:alias**: 連結兩個 container，name 為要連結的容器名稱，alias 為這兩個容器連接後的別名
 * **-\-dns=IP_ADDRESS**: 自定 DNS 伺服器
@@ -192,9 +180,6 @@ docker run 指令每次都會 new container，並不會重複利用 container
 ```javascript!
 docker exec -it containerName bash
 ```
-:::warning
-**docker attach vs docker exec -it**: 使用 attach 進入容器會在離開容器時終止容器，但使用 exec -it 進入容器後離開並不會終止容器。
-:::
 
 ### docker export conatinerName
 > 把 container 的檔案系統使用 tar 打包輸出
@@ -202,9 +187,6 @@ docker exec -it containerName bash
 ### docker import fileName imageName
 > 把打包的 tar 檔的檔案系統導入到 Docker repository 裡
 
-:::info
-**docker load vs docker import**: load 會將完整的儲存檔案紀錄都載下來 (檔案較大)，但 import 只會保存容器當時的記錄及狀態，不會留存歷史紀錄或是 tag、作者之類的資訊
-:::
 
 ### denter containerName 
 > 進入 run 在背景的 container
@@ -215,9 +197,6 @@ docker exec -it containerName bash
     * **-m or -\-message**: 提交的說明資訊
     * **-a or -\-author**: 更新的使用者資訊
 
-:::warning
-使用 docker commit 產生的 image 被稱做黑箱映像，意旨只有製作此映像的人才知道此映像操作過的內容，使得維護困難，通常不建議使用。
-:::
 
 ### docker secret create secretName
 > 創建一個或多個密鑰，只能用於 swarm mode
@@ -289,9 +268,6 @@ docker secret create my_secret_key -
 * **從容器複製檔案到本地端**
     * docker cp containerName:containerPath local_path
 
-:::danger
-與 DockerFile 中的 COPY 指令類似，不同之處在於 COPY 只能把本機的檔案複製到容器內，但 cp 指令可以雙向複製。
-:::
 
 ### docker diff
 > 查看 container 檔案系統，與 image 檔案系統的差異，方便分辨容器啟動後對檔案做了哪些修改
@@ -328,9 +304,6 @@ docker secret create my_secret_key -
 ## docker volume 指令
 > 從 docker 內切出一塊獨立空間出來，提供容器使用，讓容器可以儲放資料。
 
-:::info
-**volume vs bind**: volume 是由 docker 管理的，使用時會在主機上建立 docker 儲存資料夾，而 bind mount 完全是依賴主機的 filesysteam，表示這個資料夾原本要存在於主機上才讀取的到
-:::
 
 ### docker volume create -\-name volueName
 > 創造 volume
@@ -488,9 +461,6 @@ docker images -f dangling=true
 ### 中間映像 (intermediate image)
 > 中間映象是指建立 image 所需依賴的父層 image(由於鏡像分層產生)，透過``docker images -a`` 才會顯示，不會占空間，也不應該刪除，否則會導致上層映像依賴遺失出錯。
 
-:::warning
-**中間映像 vs 虛懸映像**，可透過指令區分，透過 ``docker images -a`` 指令出現的空映像為中間映像，而透過``docker images`` 顯示的映像為虛懸映像。
-:::
 
 ### 容器間溝通要素
 * 網路拓樸互聯，預設是連到 bridge docker0 

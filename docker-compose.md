@@ -5,15 +5,10 @@ tags: docker, docker compose, dockerFile, docker hub
 ---
 
 # docker 初學筆記
-:::info
-**YAML 檔案格式** <兩種格式結果相同>
-`key: value` (字典形式)
-`- key = value` (列表形式)
-:::
 ## dockerFile
 > 優化原則: **不常變動的早點做，常變動的晚點做** (為了讓 docker 可以多使用 cache)
 
-* **FROM ==imagesName:tag==**
+* **FROM imagesName:tag**
     * 指定 base image
     * Ex.FROM node:19-alpine (node環境)
 * **MAINTAINER**
@@ -22,7 +17,7 @@ tags: docker, docker compose, dockerFile, docker hub
 * **AS**
     * 定義**階段**的指令，階段可隨意命名，通常搭配 FROM 一起使用
     * ex. **FROM **node:20-alpine **AS** build 定義為 build 階段
-* **COPY ==fileName conatainerPath==**
+* **COPY fileName conatainerPath**
     * copy local file into docker container
     * Ex.COPY package.json /app/ 將 package.json 複製到 container 中 app 資料夾下
     **options**
@@ -31,10 +26,10 @@ tags: docker, docker compose, dockerFile, docker hub
 
 * **ADD sourcePath filePath**
     * 可以複製本地檔案到映像中，還可以解壓縮 tar 文件、URL　檔案下載與複製，並且可以自動解決 URL 路徑或是 tar 文件中的壓縮格式等
-* **WORKDIR ==defaultPath==**
+* **WORKDIR defaultPath**
     * 切換工作路徑，像是 terminal 中常用的 cd
     * Ex.WORKDIR /app
-* **RUN ==command==**
+* **RUN command**
     * 在 docker build 時運行
     * 執行 command or 安裝套件
     * Ex.npm install express
@@ -49,10 +44,6 @@ tags: docker, docker compose, dockerFile, docker hub
     * -R 表示遞迴操作，將指定目錄下的所有檔案和子目錄都進行相同的操作。
     * userName:groupName 表示將擁有者設置為 userName 用戶，群組設置為 groupName 用戶組
 
-:::info
-RUN vs CMD:
-RUN 是 image 在建置成容器時會執行的，CMD 則是容器建置完成後啟動容器時執行的。
-:::
 
 * **USER userName:groupName**
     * 改變容器的使用者身份，將其切換為 userName 用戶
@@ -66,10 +57,10 @@ RUN 是 image 在建置成容器時會執行的，CMD 則是容器建置完成�
     * 放在 FROM 之前的 ARG 只有 FROM 能使用，想要在 FROM 之後使用必須在 FROM 之後宣告。
 * **VOLUME ["path"] or path**
     * 在 container 中建立掛載點或宣告磁碟區，為了把資料寫入到實體機器上 (資料存在主機的文件裡)
-    * 也可以用 ==docker run -v path==
+    * 也可以用 docker run -v path
 * **EXPOSE port**
     * 聲明 container 要使用的 port，並不會自動映射 port ( 與 `-p` 指令不同)
-* **CMD ==["executable", "\<param1>"]==**
+* **CMD ["executable", "\<param1>"]**
     * 在docker run 時運行
     * 只能有一條 CMD 指令
     * 可被 command line 中 docker run 語句複寫
@@ -79,12 +70,6 @@ RUN 是 image 在建置成容器時會執行的，CMD 則是容器建置完成�
     * 類似 CMD，但不會被 command line 中 docker run 語句複寫 (使用 -\-entrypoint參數時例外)
     * 還可以執行 Dockerfile 外的 script 檔案 ex.ENTRYPOINT ["docker-entrypoint.sh"]
 
-:::info
-CMD 可以搭配 ENTRYPOINT 一起使用，通常比較建議這樣使用，例如:
-ENTRYPOINT [ "nginx" , "-c" ] # 定參
-CMD [ "/etc/nginx/nginx.conf" ] # 傳參
-等於 $ docker run  nginx:test -c /etc/nginx/new.conf
-:::
 
 * **SHELL**
     * 用於指定指令的 shell
@@ -146,7 +131,7 @@ CMD npm run $NODE_ENV
 ### dockerFile 撰寫技巧
 
 #### 多行指令
->  用 ==\\== 表示換行
+>  用 \\ 表示換行
 
 **Example**
 ```dockerfile!
@@ -198,10 +183,6 @@ RUN apk add --no-cache \
     # sharing=locked 指定這個 volume 在建置期間是被鎖定的，這表示它在建置期間不會被其他容器或建置工作共享。
     ```
 
-    :::info
-    **實例情況**: image build 時把資料掛載上去，build 後自動卸載，省去每次安裝資料的時間，也可避免產生過多中間層 image。(Ex. node_modules 資料夾)
-    :::
-
 * **secret**: 用於一些需要登入才能取得的資源，在最終的生成物中也不會保留這些敏感資訊
     **options**
     * **target**: 掛載到容器的目標路徑
@@ -221,10 +202,6 @@ RUN apk add --no-cache \
 
 ## docker compose
 > 用於定義和執行多容器 Docker 應用程式的工具，利用 YAML 檔，向 Docker API 發送指令，再由 API 把指令內容傳遞給 Docker 應用程式。
-
-:::success
-YAML 檔案以``.yaml | .yml``結尾，主要可以將資料轉換成特定格式，常用於設定檔和配置檔的編寫，優點為輕量且易於撰寫
-:::
 
 ## docker compose 指令
 * **docker compose `[opionts]` [command]**:
@@ -351,10 +328,6 @@ services:
     image: postgres:16-alpine
     container_name: db
 ```
-
-:::danger
-指定容器名稱後無法進行擴充 scale，docker 不允許多個容器具有相同名稱
-:::
 
 
 ### working_dir 
@@ -1098,11 +1071,6 @@ networks:
         - subnet: "172.16.238.0/24"
         - subnet: "2001:3984:3989::/64"
 ```
-
-:::info
-IPAM 在 Docker 中是預設啟用的，在大多數情況下不需要額外配置，但如果你想要 **自訂IP位置分配、自訂IPAM驅動程式、啟用 IPv6**。就需要使用 IPAM 配置。
-:::
-
 
 ---
 

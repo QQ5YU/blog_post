@@ -249,8 +249,8 @@ unset VARIABLENAME
         **寫法**
         * **-name 'name'**: 找叫做 name 的檔案
         * **-name '\*a\*'**: 找包含 a 這個字的檔案
-        * **-name 'A\*'**: 找 A ==開頭==的檔案
-        * **-name '*A'**: 找 A ==結尾==的檔案
+        * **-name 'A\*'**: 找 A 開頭的檔案
+        * **-name '*A'**: 找 A 結尾的檔案
     * **-user**: 指定使用者
     * **-group**: 指定群組
     * **-perm**: 指定權限
@@ -404,25 +404,22 @@ unset VARIABLENAME
 ### 權限指令
 * **chmod <權限> <檔案名稱>**: change file mode bits，變更檔案權限
 
-    ==**options**==
+    **options**
     * **-R**: 修改資料夾權
     
-    ==**數字表示法**==
+    **數字表示法**
     * **0**: No Permission
     * **1**: Execute
     * **2**: Write
     * **4**: Read 
     
-    ==**符號表示法**==
+    **符號表示法**
     * **r**: 可讀
     * **w**: 可寫
     * **x**: 可執行
     * **+**: 新增
     * **-**: 移除
     
-    :::success
-    使用 u, g, o, a 表示擁有者、群組內使用者、其他使用者、全部使用者。可以看成 user, group, others 以及 all。
-    :::
         
     **Example**
     > 擁有者(u) 新增(+) 讀取(r) 的權限
@@ -463,9 +460,6 @@ unset VARIABLENAME
     * **show**: 查看 bridge 與連線資訊
     * **addbr bridgeName**: 創建 bridge
 
-:::success
-brct1 指令需要安裝 (install bridge-utils)
-:::
 
 * **ip addr**
     **options**
@@ -623,10 +617,6 @@ EOF
 #!/path/to/interpreter
 ```
 
-:::danger
-\# 是單行註解，#!開頭是 Shebang Line
-:::
-
 ### print
 
 **Example - 單行 print**
@@ -670,9 +660,6 @@ echo "Hello, $name! Welcome to our script."
     * **存取指令運行結果**:
         * `var=$(command)`
 
-:::warning
-要將變數用於字串只能用==雙引號==或==反引號==包起來，單引號通常為了避免特殊符號被解釋而使用
-:::
 
 ### 基本運算
 
